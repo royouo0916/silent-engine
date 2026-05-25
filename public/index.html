@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Silent Engine - 絕對專注</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background-color: #1a1a1a;
+            color: #d1d1d1;
+            font-family: 'Inter', sans-serif;
+            height: 100dvh;
+            overflow: hidden;
+        }
+        .focus-ring {
+            border: 1px solid #333;
+            transition: all 0.5s ease;
+        }
+        .focus-ring:hover {
+            border-color: #555;
+        }
+        @keyframes breathe {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.02); }
+        }
+        .breathing-bg {
+            animation: breathe 8s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body class="flex flex-col items-center justify-center p-6">
+    <div class="breathing-bg fixed inset-0 bg-gradient-to-b from-neutral-900 to-black z-[-1]"></div>
+    
+    <div class="w-full max-w-md space-y-8">
+        <header class="text-center">
+            <h1 class="text-2xl font-light tracking-widest text-white">SILENT ENGINE</h1>
+            <p class="text-xs text-neutral-500 mt-2">在混亂中建造寧靜</p>
+        </header>
+
+        <main id="app" class="space-y-6">
+            <!-- Current Task -->
+            <div class="focus-ring bg-neutral-800/50 p-6 rounded-lg backdrop-blur-sm">
+                <p class="text-xs text-neutral-400 mb-1">當前任務</p>
+                <h2 id="current-task" class="text-xl font-medium">點擊 /start 開始</h2>
+            </div>
+
+            <!-- Empath Question -->
+            <div id="empath-box" class="bg-neutral-900 border-l-2 border-neutral-700 p-4 hidden">
+                <p id="empath-question" class="text-sm italic"></p>
+                <div class="flex gap-2 mt-3">
+                    <button class="text-xs px-3 py-1 bg-neutral-800 rounded hover:bg-neutral-700">還好</button>
+                    <button class="text-xs px-3 py-1 bg-neutral-800 rounded hover:bg-neutral-700">卡卡的</button>
+                </div>
+            </div>
+
+            <!-- Tactician Status -->
+            <div class="flex justify-between text-[10px] uppercase tracking-tighter text-neutral-500">
+                <span>點數: <span id="points">0</span></span>
+                <span>羈絆: <span id="synergy">無</span></span>
+            </div>
+        </main>
+
+        <footer class="fixed bottom-8 left-0 w-full px-6">
+            <input type="text" id="input" placeholder="輸入指令或目標..." 
+                class="w-full bg-transparent border-b border-neutral-700 py-2 focus:outline-none focus:border-neutral-400 transition-colors text-sm">
+        </footer>
+    </div>
+
+    <script>
+        // Simple mock of the backend logic for the single-file demo
+        const input = document.getElementById('input');
+        const currentTask = document.getElementById('current-task');
+        const empathBox = document.getElementById('empath-box');
+        const empathQuestion = document.getElementById('empath-question');
+        const pointsEl = document.getElementById('points');
+
+        input.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                const val = input.value;
+                input.value = '';
+                
+                if (val === '/start') {
+                    currentTask.innerText = "準備作業系統期末考：定義 3 個指標";
+                    empathBox.classList.remove('hidden');
+                    empathQuestion.innerText = "你現在感覺卡卡的嗎？";
+                    pointsEl.innerText = "10";
+                }
+            }
+        });
+    </script>
+</body>
+</html>
